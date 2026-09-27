@@ -20,6 +20,7 @@ import 'package:study_studio/src/presentation/quiz_me/quiz_me_page.dart';
 import 'package:study_studio/src/presentation/ready/ready_page.dart';
 import 'package:study_studio/src/presentation/scenario_mode/scenario_mode_page.dart';
 import 'package:study_studio/src/presentation/study_plan/study_plan_page.dart';
+import 'package:study_studio/src/presentation/teach_me/teach_me_page.dart';
 import 'package:study_studio/src/presentation/topic_detail/topic_detail_page.dart';
 import 'package:study_studio/src/presentation/topic_library/topic_library_page.dart';
 import 'package:study_studio/src/presentation/upload/upload_page.dart';
@@ -33,13 +34,14 @@ void main() {
   setUpAll(() async {
     final loader = FontLoader('Outfit')
       ..addFont(
-        File(
-          '../../apps/cockpit/assets/fonts/Outfit-VariableFont_wght.ttf',
-        ).readAsBytes().then((bytes) => ByteData.sublistView(bytes)),
+        File('../../apps/cockpit/assets/fonts/Outfit-VariableFont_wght.ttf')
+            .readAsBytes()
+            .then((bytes) => ByteData.sublistView(bytes)),
       );
     await loader.load();
   });
   final pages = <String, Widget>{
+    'teach_me': const TeachMePage(studioId: 'bio', topicId: 'bio_dna'),
     'home': const StudyHomePage(),
     'upload': const UploadPage(),
     'building': const BuildingPage(jobId: 'test'),
@@ -83,7 +85,6 @@ void main() {
         await tester.pump();
         await tester.pump(const Duration(milliseconds: 500));
         expect(tester.takeException(), isNull);
-        // Traverse lazily rendered content as well as the first viewport.
         final scrolls = find.byType(Scrollable);
         if (scrolls.evaluate().isNotEmpty) {
           for (var i = 0; i < 4; i++) {
